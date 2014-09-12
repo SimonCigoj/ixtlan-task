@@ -1,0 +1,63 @@
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>${artifactId}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <h:outputStylesheet name="css/screen.css" />
+</h:head>
+<h:body>
+    <div id="container">
+       <h:selectOneMenu value="#{calendarView.month}" >
+       		<f:selectItem itemLabel="1" itemValue="1"/>
+       		<f:selectItem itemLabel="2" itemValue="2"/>
+       		<f:selectItem itemLabel="3" itemValue="3"/>
+       		<f:selectItem itemLabel="4" itemValue="4"/>
+       		<f:selectItem itemLabel="5" itemValue="5"/>
+       		<f:selectItem itemLabel="6" itemValue="6"/>
+       		<f:selectItem itemLabel="7" itemValue="7"/>
+       		<f:selectItem itemLabel="8" itemValue="8"/>
+       		<f:selectItem itemLabel="9" itemValue="9"/>
+       		<f:selectItem itemLabel="10" itemValue="10"/>
+       		<f:selectItem itemLabel="11" itemValue="11"/>
+       		<f:selectItem itemLabel="12" itemValue="12"/>
+       		
+       		<f:converter converterId="si.ixtlan.IntegerConverter" />
+       </h:selectOneMenu>
+       
+       <h:inputText value="#{calendarView.year}" size="4" maxlength="4"/>
+       
+       <h:inputText value="#{calendarView.date}">  
+		   <f:convertDateTime pattern="dd.MM.yyyy"/>  
+	   </h:inputText>
+       <br /><br />
+       <ui:repeat var="week" value="#{calendarView.calendar.weekNumbers}">
+       	   <ui:repeat var="day" value="#{calendarView.calendar.weeks.get(week)}">
+       	   <div style="width: 40px; height: 40px; padding-top:20px; padding-left:20px; float:left; border: 1px solid #{(calendarView.calendar.isCurrentDate(day.date))?'blue':'white'}; #{(day.sunday)?'background-color:red;': ''}">
+       	   		#{day.date.dayOfMonth}
+       	   </div>
+       	   </ui:repeat>
+       	   <br style="clear: both;"/>
+       </ui:repeat>
+    </div>
+</h:body>
+</html>
