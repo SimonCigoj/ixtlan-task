@@ -11,35 +11,52 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+/**
+ * The main calendar object that represents the gui state of the calendar.
+ * @author simon
+ *
+ */
 public class Calendar {
 
-	private LocalDate currentDate;
+	private Integer year;
+	private Integer month;
+	
 	private Map<Integer, List<CalendarDay>> weeks = new LinkedHashMap<Integer, List<CalendarDay>>();
 	
 	public Calendar() {
-		currentDate = new LocalDate(new Date().getTime());
+		LocalDate now = new LocalDate(new Date().getTime());
+		month = now.getMonthOfYear();
+		year = now.getYear();
 	}
 	
-	public LocalDate getFirstDayOfMont() {
-		return currentDate.dayOfMonth().withMinimumValue();
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public Integer getMonth() {
+		return month;
+	}
+
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+
+	public LocalDate getFirstDayOfMonth() {
+		return new LocalDate(year,month,1);
 	}
 	
-	public LocalDate getLastDayOfMont() {
-		return currentDate.dayOfMonth().withMaximumValue();
+	public LocalDate getLastDayOfMonth() {
+		return getFirstDayOfMonth().dayOfMonth().withMaximumValue();
 	}
 	
 	public int getDaysInMonth() {
-		return currentDate.dayOfMonth().getMaximumValue();
+		return getFirstDayOfMonth().dayOfMonth().getMaximumValue();
 	}
 	
-	public LocalDate getCurrentDate() {
-		return currentDate;
-	}
-	
-	public void setCurrentDate(LocalDate currentDate) {
-		this.currentDate = currentDate;
-	}
-
 	public Map<Integer, List<CalendarDay>> getWeeks() {
 		return weeks;
 	}
@@ -52,9 +69,5 @@ public class Calendar {
 		return new ArrayList<Integer>(weeks.keySet());
 	}
 	
-	public boolean isCurrentDate(LocalDate date){
-		return date.equals(currentDate);
-	}
-
-		
+			
 }
